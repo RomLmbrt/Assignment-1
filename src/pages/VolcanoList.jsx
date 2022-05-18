@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { Button, Badge } from "reactstrap";
-import axios from "axios";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
@@ -72,7 +71,7 @@ function GetCountries() {
     fetch(`http://sefdb02.qut.edu.au:3001/countries`, {
       method: "GET"
     })
-      .then((res) => res.json)
+      .then((res) => res.json())
       .then((res) => {
         console.log(res);
       })
