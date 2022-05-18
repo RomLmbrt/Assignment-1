@@ -1,6 +1,6 @@
 .App {
   font-family: sans-serif;
-  text-align: center;
+  text-align: left;
 }
 
 /*header and footer*/
@@ -34,12 +34,18 @@ nav ul li {
   transition: 0.3s ease all;
 }
 
+/* Home */
+.hero__title {
+  font-family: "Merriweather", serif;
+  margin-left: 10px;
+}
+
 /* Search Bar */
 .country__title {
   font-size: 100%;
   margin: 0;
-  margin-right: 5px;
-  margin-left: 0px;
+  margin-right: 0px;
+  margin-left: 5px;
   font-family: "Merriweather", serif;
 }
 
@@ -57,9 +63,9 @@ div ul {
 }
 
 #icon img {
-  height: 100%;
-  width: 100%;
-  vertical-align: middle;
+  height: 500px;
+  width: 750px;
+  vertical-align: left;
 }
 
 .volcano {

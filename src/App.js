@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -22,7 +22,6 @@ export default function App() {
           <Route path="/VolcanoList" element={<VolcanoList />} />
           <Route path="/VolcanoList/Volcano" element={<Volcano />} />
         </Routes>
-        <Footer />
       </div>
     </BrowserRouter>
   );
