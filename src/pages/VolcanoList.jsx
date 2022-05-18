@@ -18,11 +18,11 @@ export default function VolcanoList() {
 
   if (loading) {
     return <p>Loading...</p>;
-  };
+  }
 
-  if(error !== null) {
-    return <p>Error: {error}</p>
-  };
+  if (error !== null) {
+    return <p>Error: {error}</p>;
+  }
 
   const columns = [
     { headerName: "Time", field: "time", sortable: true, filter: true },
@@ -39,9 +39,9 @@ export default function VolcanoList() {
         <Badge color="success">{rowData.length}</Badge> Books published in 2000
         in the Drama category
       </p>
-      <SearchBar 
-        countriesToAdd={getCountries()} 
-        onChange={setCountry} 
+      <SearchBar
+        countriesToAdd={["Brisbane", "Paris", "London"]}
+        onChange={setCountry}
       />
       <div
         className="ag-theme-balham"
@@ -50,21 +50,22 @@ export default function VolcanoList() {
           width: "800px"
         }}
       >
-          <AgGridReact
+        <AgGridReact
           rowData={rowData}
           columnDefs={columns}
           pagination
           paginationPageSize={7}
-          onRowClicked={(row) => navigate(`/VolcanoList/Volcano?Name=${row.data.title}`)}
-          />
-
+          onRowClicked={(row) =>
+            navigate(`/VolcanoList/Volcano?Name=${row.data.title}`)
+          }
+        />
       </div>
     </div>
   );
 }
 
 /*get the list of countries */
-function getCountries(){
+function GetCountries() {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
@@ -75,7 +76,10 @@ function getCountries(){
           throw new Error(res.error.message);
         }
       })
-      .then((countries) =>{setCountries(countries)});
+      .then((res) => {
+        setCountries(res);
+      });
   }, []);
 
+  return countries;
 }
