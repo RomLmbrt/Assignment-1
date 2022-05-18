@@ -37,11 +37,6 @@ export default function VolcanoList() {
 
   return (
     <div className="container">
-      <h1>Book Catalogue</h1>
-      <p>
-        <Badge color="success">{rowData.length}</Badge> Books published in 2000
-        in the Drama category
-      </p>
       <SearchBar countriesToAdd={countries} onChange={setCountry} />
       <div
         className="ag-theme-balham"
@@ -56,7 +51,9 @@ export default function VolcanoList() {
           pagination
           paginationPageSize={7}
           onRowClicked={(row) =>
-            navigate(`/VolcanoList/Volcano?Name=${row.data.title}`)
+            navigate(
+              `/VolcanoList/Volcano?country=${country}&id=${row.data.time}`
+            )
           }
         />
       </div>
