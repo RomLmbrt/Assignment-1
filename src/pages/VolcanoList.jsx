@@ -74,7 +74,7 @@ function GetCountries() {
     })
       .then((res) => res.json())
       .then((res) => {
-        setCountries(res);
+        console.log(res);
       })
       .catch((error) => console.log(error));
   }, []);
