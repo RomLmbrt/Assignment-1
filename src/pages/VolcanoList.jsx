@@ -69,7 +69,9 @@ function GetCountries() {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    fetch(`http://sefdb02.qut.edu.au:3001/countries`)
+    fetch(`http://sefdb02.qut.edu.au:3001/countries`, {
+      method: "GET"
+    })
       .then((res) => res.json())
       .then((res) => {
         setCountries(res);
