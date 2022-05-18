@@ -16,6 +16,8 @@ export default function VolcanoList() {
   const [country, setCountry] = useState("Brisbane");
   const { loading, rowData, error } = useVolcanoList(country);
 
+  var test = GetCountries();
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -39,10 +41,7 @@ export default function VolcanoList() {
         <Badge color="success">{rowData.length}</Badge> Books published in 2000
         in the Drama category
       </p>
-      <SearchBar
-        countriesToAdd={["Brisbane", "Paris", "London"]}
-        onChange={setCountry}
-      />
+      <SearchBar countriesToAdd={test} onChange={setCountry} />
       <div
         className="ag-theme-balham"
         style={{
@@ -75,8 +74,6 @@ function GetCountries() {
         if ("error" in res) {
           throw new Error(res.error.message);
         }
-      })
-      .then((res) => {
         setCountries(res);
       });
   }, []);
