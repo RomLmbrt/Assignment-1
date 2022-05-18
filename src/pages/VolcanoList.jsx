@@ -72,7 +72,7 @@ function GetCountries() {
     fetch(`http://sefdb02.qut.edu.au:3001/countries`, {
       method: "GET"
     })
-      .then((res) => res.json())
+      .then((res) => res.json)
       .then((res) => {
         console.log(res);
       })
