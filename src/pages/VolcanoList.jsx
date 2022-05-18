@@ -73,11 +73,9 @@ function GetCountries() {
       .get(`http://sefdb02.qut.edu.au:3001/countries`)
       .then((res) => res.json())
       .then((res) => {
-        if ("error" in res) {
-          throw new Error(res.error.message);
-        }
         setCountries(res);
-      });
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   return countries;
