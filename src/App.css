@@ -69,7 +69,7 @@ div ul {
 }
 /* Volcano */
 .volcano {
-  width: 100%;
+  width: 250px;
   display: inline-flex;
   margin-left: 0px;
 }
@@ -79,4 +79,8 @@ div ul {
   display: inline-flex;
   margin-left: 5px;
   margin: 10px;
+}
+
+.all_volcano {
+  display: flex;
 }
