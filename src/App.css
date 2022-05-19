@@ -67,9 +67,16 @@ div ul {
   width: 750px;
   vertical-align: left;
 }
-
+/* Volcano */
 .volcano {
   width: 100%;
   display: inline-flex;
   margin-left: 0px;
+}
+
+.map {
+  width: 100%;
+  display: inline-flex;
+  margin-left: 5px;
+  margin: 10px;
 }

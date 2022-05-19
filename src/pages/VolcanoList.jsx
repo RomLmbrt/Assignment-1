@@ -7,7 +7,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 
 import "../App.css";
-import { useVolcanoList } from "../api";
+import { useVolcanoList } from "../apiVolcano";
 import SearchBar from "../components/SearchBar";
 
 /*display the grid*/
