@@ -84,3 +84,9 @@ div ul {
 .all_volcano {
   display: flex;
 }
+
+.graph {
+  margin-left: 150px;
+  width: 600px;
+  height: 600px;
+}

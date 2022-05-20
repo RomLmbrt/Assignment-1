@@ -31,8 +31,7 @@ export default function VolcanoList() {
     { headerName: "Time", field: "time", sortable: true, filter: true },
     { headerName: "Text", field: "text" },
     { headerName: "Temp", field: "temp" },
-    { headerName: "Wind", field: "wind" },
-    { headerName: "Icon", field: "icon" }
+    { headerName: "Wind", field: "wind" }
   ];
 
   return (

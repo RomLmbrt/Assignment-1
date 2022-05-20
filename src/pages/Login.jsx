@@ -3,37 +3,12 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function Login(props) {
-  const [id, setId] = useState({});
-
   return (
     <div>
       <h1>Login</h1>
-      <LoginBar onSubmit={setId} />
-      {id !== {} ? <h1>Your Email {id.Email}</h1> : null}
-      {id !== {} ? <h1>Your Password {id.Password}</h1> : null}
+      <LoginBar />
     </div>
   );
-}
-
-/*create a new login*/
-function NewLogin(props) {
-  const url = "http://sefdb02.qut.edu.au:3001/user/register}";
-
-  return fetch(url, {
-    method: "POST",
-    headers: {
-      accept: "applications/json",
-      "Content-Type": "applications/json"
-    },
-    body: JSON.stringify({
-      email: props.Email,
-      password: props.Password
-    })
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      localStorage.setItem("token", res.token);
-    });
 }
 
 /*create the bar for entering the user's email+password*/
@@ -71,7 +46,6 @@ function LoginBar(props) {
           id="button"
           type="button"
           onClick={() => {
-            props.onSubmit({ Email: email, Password: password });
             NewLogin({ Email: email, Password: password });
           }}
         >
@@ -80,4 +54,25 @@ function LoginBar(props) {
       </form>
     </div>
   );
+}
+
+/*create a new login*/
+function NewLogin(props) {
+  const url = "http://sefdb02.qut.edu.au:3001/user/login}";
+
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      accept: "applications/json",
+      "Content-Type": "applications/json"
+    },
+    body: JSON.stringify({
+      email: props.Email,
+      password: props.Password
+    })
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      localStorage.setItem("token", res.token);
+    });
 }

@@ -10,7 +10,7 @@ export function useVolcanoList(country) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getVolcanoList(country)
+    GetVolcanoList(country)
       .then((volcanoList) => {
         setRowData(volcanoList);
         setLoading(false);
@@ -26,19 +26,21 @@ export function useVolcanoList(country) {
   };
 }
 
-function getVolcanoList(country) {
+function GetVolcanoList(country) {
+  const token = localStorage.getItem("token");
+  const headers = {
+    accept: "application/json",
+    "Content-Type": "application/json",
+    Authorization: "Bearer" + token
+  };
+
   return fetch(
-    `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${country}`
+    `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${country}`,
+    { headers }
   )
     .then((res) => res.json())
-    .then((res) => {
-      if ("error" in res) {
-        throw new Error(res.error.message);
-      }
-      return res.forecast.forecastday[0].hour;
-    })
     .then((works) =>
-      works.map((work) => {
+      works.forecast.forecastday[0].hour.map((work) => {
         return {
           time: work.time,
           text: work.condition.text,
@@ -47,5 +49,6 @@ function getVolcanoList(country) {
           icon: work.condition.icon
         };
       })
-    );
+    )
+    .catch((error) => console.log(error));
 }

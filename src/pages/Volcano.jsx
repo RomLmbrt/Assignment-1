@@ -3,12 +3,14 @@ import { Button } from "reactstrap";
 import { Map, Marker } from "pigeon-maps";
 
 import { useVolcanoList } from "../apiVolcano";
+import { Chart } from "../components/Chart";
 
 export default function Volcano() {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const country = searchParams.get("country");
   const data = useVolcanoList(country).rowData;
+  var token = localStorage.getItem("token");
 
   /*search for the right volcanoe */
   var volcano = {};
@@ -19,13 +21,20 @@ export default function Volcano() {
   });
 
   return (
-    <div className="all_volcano">
-      <div className="volcano">
-        <UseData {...volcano} />
-      </div>
-      <div className="map">
-        <UseMap long={50.879} lat={50.879} />
-      </div>
+    <div className="container">
+      <p>
+        <div className="all_volcano">
+          <div className="volcano">
+            <UseData {...volcano} />
+          </div>
+          <div className="map">
+            <UseMap long={50.879} lat={50.879} />
+          </div>
+        </div>
+      </p>
+      <p>
+        <div className="graph">{token === null ? <Chart /> : null}</div>
+      </p>
     </div>
   );
 }
