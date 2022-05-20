@@ -1,9 +1,83 @@
-import React from "react";
+import { PropertyKeys } from "ag-grid-community";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
-export default function Login() {
+export default function Login(props) {
+  const [id, setId] = useState({});
+
   return (
-    <main>
-    </main>
+    <div>
+      <h1>Login</h1>
+      <LoginBar onSubmit={setId} />
+      {id !== {} ? <h1>Your Email {id.Email}</h1> : null}
+      {id !== {} ? <h1>Your Password {id.Password}</h1> : null}
+    </div>
+  );
+}
+
+/*create a new login*/
+function NewLogin(props) {
+  const url = "http://sefdb02.qut.edu.au:3001/user/register}";
+
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      accept: "applications/json",
+      "Content-Type": "applications/json"
+    },
+    body: JSON.stringify({
+      email: props.Email,
+      password: props.Password
+    })
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      localStorage.setItem("token", res.token);
+    });
+}
+
+/*create the bar for entering the user's email+password*/
+
+function LoginBar(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  return (
+    <div>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
+        <input
+          aria-labelledby="button"
+          id="email"
+          name="email"
+          type="text"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          aria-labelledby="button"
+          id="password"
+          name="password"
+          type="text"
+          placeholder="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button
+          id="button"
+          type="button"
+          onClick={() => {
+            props.onSubmit({ Email: email, Password: password });
+            NewLogin({ Email: email, Password: password });
+          }}
+        >
+          Login
+        </button>
+      </form>
+    </div>
   );
 }
