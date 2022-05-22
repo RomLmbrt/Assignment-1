@@ -2,38 +2,39 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "reactstrap";
 import { Map, Marker } from "pigeon-maps";
 
-import { useVolcanoList } from "../apiVolcano";
+import { useVolcano } from "../apiVolcano";
 import { Chart } from "../components/Chart";
 
 export default function Volcano() {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
-  const country = searchParams.get("country");
-  const data = useVolcanoList(country).rowData;
+  const { loading, data, error } = useVolcano(id);
   var token = localStorage.getItem("token");
 
-  /*search for the right volcanoe */
-  var volcano = {};
-  data.map((elt) => {
-    if (elt.time === id) {
-      volcano = elt;
-    }
-  });
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error !== null) {
+    return <p>Error: {error}</p>;
+  }
 
   return (
     <div className="container">
       <p>
         <div className="all_volcano">
           <div className="volcano">
-            <UseData {...volcano} />
+            <UseData {...data} />
           </div>
           <div className="map">
-            <UseMap long={50.879} lat={50.879} />
+            <UseMap long={data.longitude} lat={data.latitude} />
           </div>
         </div>
       </p>
       <p>
-        <div className="graph">{token === null ? <Chart /> : null}</div>
+        <div className="graph">
+          {token !== null ? <Chart {...data} /> : null}
+        </div>
       </p>
     </div>
   );
@@ -54,20 +55,20 @@ function UseMap(props) {
 }
 
 /* return the data */
-function UseData(volcano) {
+function UseData(data) {
   const navigate = useNavigate();
 
   return (
     <div className="volcano">
       <div className="container">
         <p>
-          <h1>{volcano.text}</h1>
-          <p>Country: {volcano.text}</p>
-          <p>Region: {volcano.temp}</p>
-          <p>Subregion: {volcano.time}</p>
-          <p>Last Eruption: {volcano.wind}</p>
-          <p>Summit: {volcano.temp}</p>
-          <p>Elevation: {volcano.time}</p>
+          <h1>{data.name}</h1>
+          <p>Country: {data.country}</p>
+          <p>Region: {data.region}</p>
+          <p>Subregion: {data.subregion}</p>
+          <p>Last Eruption: {data.last_eruption}</p>
+          <p>Summit: {data.summit}</p>
+          <p>Elevation: {data.elevation}</p>
           <Button
             color="info"
             size="sm"

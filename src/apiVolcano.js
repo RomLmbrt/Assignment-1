@@ -1,54 +1,43 @@
 import { useEffect, useState } from "react";
 
-const API_KEY = "de867676b7ca457aa7041433220504";
-
 /* in VolcanoList. Returns data for the grid */
 /*in Volcano. Returns data for the volcano selected */
-export function useVolcanoList(country) {
+export function useVolcano(id) {
   const [loading, setLoading] = useState(true);
-  const [rowData, setRowData] = useState([]);
+  const [data, setData] = useState({});
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    GetVolcanoList(country)
-      .then((volcanoList) => {
-        setRowData(volcanoList);
+    GetVolcano(id)
+      .then((volcano) => {
+        setData(volcano);
         setLoading(false);
         setError(null);
       })
       .catch((err) => setError(err.message));
-  }, [country]);
+  }, [id]);
 
   return {
     loading,
-    rowData,
+    data,
     error
   };
 }
 
-function GetVolcanoList(country) {
+function GetVolcano(id) {
   const token = localStorage.getItem("token");
   const headers = {
     accept: "application/json",
     "Content-Type": "application/json",
-    Authorization: "Bearer" + token
+    Authorization: "Bearer " + token
   };
 
-  return fetch(
-    `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${country}`,
-    { headers }
-  )
+  return fetch("http://sefdb02.qut.edu.au:3001/volcano/{" + id + "}", {
+    headers
+  })
     .then((res) => res.json())
-    .then((works) =>
-      works.forecast.forecastday[0].hour.map((work) => {
-        return {
-          time: work.time,
-          text: work.condition.text,
-          temp: work.temp_c,
-          wind: work.wind_kph,
-          icon: work.condition.icon
-        };
-      })
-    )
+    .then((volcano) => {
+      return volcano;
+    })
     .catch((error) => console.log(error));
 }

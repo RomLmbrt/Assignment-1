@@ -1,23 +1,20 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { Button, Badge } from "reactstrap";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 
 import "../App.css";
-import { useVolcanoList } from "../apiVolcano";
+import { useVolcanoList } from "../apiVolcanoList";
 import SearchBar from "../components/SearchBar";
 
 /*display the grid*/
 export default function VolcanoList() {
   const navigate = useNavigate();
-  const [country, setCountry] = useState("Brisbane");
+  var countries = GetCountries();
+  const [country, setCountry] = useState(countries[0]);
   const { loading, rowData, error } = useVolcanoList(country);
-
-  /*Get the list of countries */
-  var countries = ["Brisbane", "Paris", "London", "Mexico"];
 
   if (loading) {
     return <p>Loading...</p>;
@@ -28,10 +25,10 @@ export default function VolcanoList() {
   }
 
   const columns = [
-    { headerName: "Time", field: "time", sortable: true, filter: true },
-    { headerName: "Text", field: "text" },
-    { headerName: "Temp", field: "temp" },
-    { headerName: "Wind", field: "wind" }
+    { headerName: "Name", field: "name" },
+    { headerName: "Region", field: "region" },
+    { headerName: "Subregion", field: "subregion" },
+    { headerName: "Id", field: "id" }
   ];
 
   return (
@@ -50,9 +47,7 @@ export default function VolcanoList() {
           pagination
           paginationPageSize={7}
           onRowClicked={(row) =>
-            navigate(
-              `/VolcanoList/Volcano?country=${country}&id=${row.data.time}`
-            )
+            navigate(`/VolcanoList/Volcano?id=${row.data.id}`)
           }
         />
       </div>
@@ -65,12 +60,10 @@ function GetCountries() {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    fetch(`http://sefdb02.qut.edu.au:3001countries`, {
-      method: "GET"
-    })
+    fetch(`http://sefdb02.qut.edu.au:3001/countries`)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        setCountries(res);
       })
       .catch((error) => console.log(error));
   }, []);
